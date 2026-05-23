@@ -33,6 +33,12 @@ public final class PhotographerExceptions {
         }
     }
 
+    public static class DuplicatePortfolioFileException extends DomainException {
+        public DuplicatePortfolioFileException(String fileName) {
+            super(HttpStatus.CONFLICT, "\"" + fileName + "\" has already been uploaded to your portfolio.");
+        }
+    }
+
     public static class AvailabilitySlotNotFoundException extends DomainException {
         public AvailabilitySlotNotFoundException(UUID id) {
             super(HttpStatus.NOT_FOUND, "Availability slot not found: " + id);

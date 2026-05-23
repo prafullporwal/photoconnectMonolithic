@@ -14,5 +14,6 @@ public record PortfolioItemResponse(
         long sizeBytes,
         String publicUrl,
         int displayOrder,
-        Instant uploadedAt
+        Instant uploadedAt,
+        String originalFileName
 ) {}

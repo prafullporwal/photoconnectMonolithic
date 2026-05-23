@@ -5,6 +5,7 @@ import com.photoconnect.photographer.domain.PhotographerProfile;
 import com.photoconnect.photographer.domain.PortfolioItem;
 import com.photoconnect.photographer.dto.FeedItemResponse;
 import com.photoconnect.photographer.dto.PortfolioItemResponse;
+import com.photoconnect.photographer.exception.PhotographerExceptions.DuplicatePortfolioFileException;
 import com.photoconnect.photographer.exception.PhotographerExceptions.InvalidPortfolioFileException;
 import com.photoconnect.photographer.exception.PhotographerExceptions.PortfolioItemNotFoundException;
 import com.photoconnect.photographer.exception.PhotographerExceptions.ProfileNotFoundException;
@@ -54,6 +55,13 @@ public class PortfolioService {
         PhotographerProfile profile = profileRepo.findByUserId(userId)
                 .orElseThrow(() -> new ProfileNotFoundException(userId));
 
+        String originalFileName = file.getOriginalFilename();
+        if (originalFileName != null && !originalFileName.isBlank()
+                && portfolioRepo.existsByPhotographerProfileIdAndOriginalFileNameAndSizeBytes(
+                        profile.getId(), originalFileName, file.getSize())) {
+            throw new DuplicatePortfolioFileException(originalFileName);
+        }
+
         UUID storageId = UUID.randomUUID();
         String key = "photographers/" + profile.getId() + "/" + storageId + extensionFor(mime);
 
@@ -78,6 +86,7 @@ public class PortfolioService {
         item.setSizeBytes(file.getSize());
         item.setStorageKey(key);
         item.setPublicUrl(buildPublicUrl(key));
+        item.setOriginalFileName(originalFileName);
         item.setDisplayOrder(0);
         PortfolioItem saved = portfolioRepo.save(item);
 
@@ -206,6 +215,7 @@ public class PortfolioService {
                 i.getSizeBytes(),
                 i.getPublicUrl(),
                 i.getDisplayOrder(),
-                i.getUploadedAt());
+                i.getUploadedAt(),
+                i.getOriginalFileName());
     }
 }

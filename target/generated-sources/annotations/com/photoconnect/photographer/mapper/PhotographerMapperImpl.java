@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-23T18:52:16+0530",
-    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.46.0.v20260407-0427, environment: Java 21.0.10 (Eclipse Adoptium)"
+    date = "2026-05-23T23:13:07+0530",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.10 (Microsoft)"
 )
 @Component
 public class PhotographerMapperImpl implements PhotographerMapper {
@@ -28,16 +28,16 @@ public class PhotographerMapperImpl implements PhotographerMapper {
 
         PhotographerProfile photographerProfile = new PhotographerProfile();
 
-        photographerProfile.setBio( request.bio() );
         photographerProfile.setDisplayName( request.displayName() );
+        photographerProfile.setBio( request.bio() );
         photographerProfile.setLocation( request.location() );
+        if ( request.yearsOfExperience() != null ) {
+            photographerProfile.setYearsOfExperience( request.yearsOfExperience() );
+        }
         photographerProfile.setPricePerHour( request.pricePerHour() );
         List<String> list = request.specialties();
         if ( list != null ) {
             photographerProfile.setSpecialties( new ArrayList<String>( list ) );
-        }
-        if ( request.yearsOfExperience() != null ) {
-            photographerProfile.setYearsOfExperience( request.yearsOfExperience() );
         }
 
         photographerProfile.setAvailable( true );
@@ -89,11 +89,14 @@ public class PhotographerMapperImpl implements PhotographerMapper {
             return;
         }
 
-        profile.setAvailable( request.available() );
-        profile.setBio( request.bio() );
         profile.setDisplayName( request.displayName() );
+        profile.setBio( request.bio() );
         profile.setLocation( request.location() );
+        if ( request.yearsOfExperience() != null ) {
+            profile.setYearsOfExperience( request.yearsOfExperience() );
+        }
         profile.setPricePerHour( request.pricePerHour() );
+        profile.setAvailable( request.available() );
         if ( profile.getSpecialties() != null ) {
             List<String> list = request.specialties();
             if ( list != null ) {
@@ -109,9 +112,6 @@ public class PhotographerMapperImpl implements PhotographerMapper {
             if ( list != null ) {
                 profile.setSpecialties( new ArrayList<String>( list ) );
             }
-        }
-        if ( request.yearsOfExperience() != null ) {
-            profile.setYearsOfExperience( request.yearsOfExperience() );
         }
     }
 }

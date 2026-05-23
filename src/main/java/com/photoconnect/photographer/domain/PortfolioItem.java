@@ -41,6 +41,9 @@ public class PortfolioItem {
     @Column(name = "public_url", nullable = false, length = 1000)
     private String publicUrl;
 
+    @Column(name = "original_file_name", length = 255)
+    private String originalFileName;
+
     @Column(name = "display_order", nullable = false)
     private int displayOrder = 0;
 

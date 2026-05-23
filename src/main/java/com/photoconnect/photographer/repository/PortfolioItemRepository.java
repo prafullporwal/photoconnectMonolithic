@@ -20,6 +20,9 @@ public interface PortfolioItemRepository extends JpaRepository<PortfolioItem, UU
     List<PortfolioItem> findByPhotographerProfileIdAndCategoryOrderByDisplayOrderAscUploadedAtAsc(
             UUID profileId, String category);
 
+    boolean existsByPhotographerProfileIdAndOriginalFileNameAndSizeBytes(
+            UUID profileId, String originalFileName, long sizeBytes);
+
     @Query("""
         SELECT new com.photoconnect.photographer.repository.FeedRow(
             pi.id, pi.mediaType, pi.category, pi.mimeType, pi.publicUrl, pi.uploadedAt,

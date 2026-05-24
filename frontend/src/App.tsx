@@ -12,6 +12,7 @@ import { InquiryDetailPage } from './pages/InquiryDetailPage';
 import { PortfolioPage } from './pages/PortfolioPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { MyAvailabilityPage } from './pages/MyAvailabilityPage';
+import { AdminDashboardPage } from './pages/AdminDashboardPage';
 
 /**
  * Route map for the PhotoConnect SPA.
@@ -110,6 +111,16 @@ export default function App() {
             element={
               <ProtectedRoute allow={['PHOTOGRAPHER']}>
                 <MyAvailabilityPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin-only */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allow={['ADMIN']}>
+                <AdminDashboardPage />
               </ProtectedRoute>
             }
           />

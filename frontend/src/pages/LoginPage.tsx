@@ -46,7 +46,7 @@ export function LoginPage() {
   };
 
   return (
-    <div className="mx-auto max-w-md py-12">
+    <div className="mx-auto max-w-md px-4 py-12">
       <h1 className="mb-6 text-2xl font-semibold text-gray-900">Log in</h1>
 
       <form

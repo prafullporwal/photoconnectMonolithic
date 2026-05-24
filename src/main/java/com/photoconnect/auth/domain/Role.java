@@ -10,5 +10,6 @@ package com.photoconnect.auth.domain;
  */
 public enum Role {
     PHOTOGRAPHER,
-    CUSTOMER
+    CUSTOMER,
+    ADMIN
 }

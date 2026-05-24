@@ -21,6 +21,12 @@ export default defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
       },
+      // Forward /<bucket>/** to MinIO so root-relative media URLs work via
+      // Cloudflare tunnel (where localhost:9000 is unreachable from the browser).
+      '/photoconnect-media': {
+        target: 'http://localhost:9000',
+        changeOrigin: true,
+      },
     },
   },
 })

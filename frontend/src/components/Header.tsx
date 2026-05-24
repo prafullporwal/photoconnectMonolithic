@@ -134,6 +134,16 @@ export function Header() {
               </NavLink>
             </>
           )}
+          {user?.role === 'ADMIN' && (
+            <NavLink to="/admin" className={navLinkClass}>
+              {({ isActive }) => (
+                <>
+                  Admin
+                  {isActive && <ActiveUnderline />}
+                </>
+              )}
+            </NavLink>
+          )}
         </nav>
 
         <div className="flex items-center gap-2">

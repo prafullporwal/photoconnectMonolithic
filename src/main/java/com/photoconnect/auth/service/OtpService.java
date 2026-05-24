@@ -1,8 +1,8 @@
 package com.photoconnect.auth.service;
 
 import com.photoconnect.auth.config.OtpProperties;
-import com.photoconnect.auth.exception.InvalidOtpException;
-import com.photoconnect.auth.exception.OtpCooldownException;
+import com.photoconnect.auth.exception.AuthExceptions.InvalidOtpException;
+import com.photoconnect.auth.exception.AuthExceptions.OtpCooldownException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;

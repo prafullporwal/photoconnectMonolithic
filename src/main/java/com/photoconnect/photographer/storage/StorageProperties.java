@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "storage")
 public record StorageProperties(
         @NotBlank String endpoint,
-        @NotBlank String publicUrlPrefix,
+        String publicUrlPrefix,
         @NotBlank String bucket,
         @NotBlank String region,
         @NotBlank String accessKey,

@@ -12,7 +12,7 @@
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
 
-export type Role = 'PHOTOGRAPHER' | 'CUSTOMER';
+export type Role = 'PHOTOGRAPHER' | 'CUSTOMER' | 'ADMIN';
 
 export interface LoginRequest {
   email: string;
@@ -205,6 +205,38 @@ export interface AvailabilitySlot {
 export interface AddAvailabilityRequest {
   dates: string[];
   note?: string;
+}
+
+// ── Admin ─────────────────────────────────────────────────────────────────────
+
+export interface AdminStats {
+  totalUsers: number;
+  photographers: number;
+  customers: number;
+  totalInquiries: number;
+  totalPhotographerProfiles: number;
+}
+
+export interface AdminUser {
+  id: string;
+  email: string | null;
+  phone: string | null;
+  role: Role;
+  enabled: boolean;
+  createdAt: string;
+}
+
+export interface AdminContentItem {
+  id: string;
+  photographerProfileId: string;
+  photographerDisplayName: string;
+  mediaType: MediaKind;
+  category: string;
+  mimeType: string;
+  sizeBytes: number;
+  publicUrl: string;
+  originalFileName: string | null;
+  uploadedAt: string;
 }
 
 // ── Error envelope ───────────────────────────────────────────────────────────

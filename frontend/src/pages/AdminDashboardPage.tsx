@@ -87,7 +87,7 @@ export function AdminDashboardPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       {/* Header row */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold text-slate-900">Admin Dashboard</h1>
         <LiveToolbar
           updatedAt={activeQ.dataUpdatedAt}
@@ -96,21 +96,23 @@ export function AdminDashboardPage() {
         />
       </div>
 
-      {/* Tab bar */}
-      <div className="mb-6 flex gap-1 border-b border-slate-200">
-        {tabs.map(t => (
-          <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
-            className={`px-4 py-2 text-sm font-medium transition ${
-              tab === t.id
-                ? 'border-b-2 border-indigo-600 text-indigo-700'
-                : 'text-slate-500 hover:text-slate-800'
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
+      {/* Tab bar — horizontally scrollable on narrow screens */}
+      <div className="mb-6 overflow-x-auto">
+        <div className="flex min-w-max gap-1 border-b border-slate-200">
+          {tabs.map(t => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`shrink-0 px-4 py-2 text-sm font-medium transition ${
+                tab === t.id
+                  ? 'border-b-2 border-indigo-600 text-indigo-700'
+                  : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {tab === 'overview' && (
@@ -253,8 +255,8 @@ function UsersTab({ users, loading, error, onToggle, toggling }: {
   if (!users) return null;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200">
-      <table className="w-full text-sm">
+    <div className="overflow-x-auto rounded-xl border border-slate-200">
+      <table className="w-full min-w-[560px] text-sm">
         <thead className="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
           <tr>
             <th className="px-4 py-3">Email / Phone</th>
@@ -308,8 +310,8 @@ function PhotographersTab({ photographers, loading, error }: {
   if (!photographers) return null;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200">
-      <table className="w-full text-sm">
+    <div className="overflow-x-auto rounded-xl border border-slate-200">
+      <table className="w-full min-w-[480px] text-sm">
         <thead className="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
           <tr>
             <th className="px-4 py-3">Name</th>
@@ -353,8 +355,8 @@ function InquiriesTab({ inquiries, loading, error }: {
   if (!inquiries) return null;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200">
-      <table className="w-full text-sm">
+    <div className="overflow-x-auto rounded-xl border border-slate-200">
+      <table className="w-full min-w-[600px] text-sm">
         <thead className="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
           <tr>
             <th className="px-4 py-3">Event</th>
@@ -430,8 +432,8 @@ function ContentTab({ items, loading, error, onDelete, deleting }: {
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-xl border border-slate-200">
+        <table className="w-full min-w-[700px] text-sm">
           <thead className="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
             <tr>
               <th className="px-4 py-3">File</th>

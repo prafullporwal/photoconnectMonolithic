@@ -15,9 +15,16 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     port: 5173,
+    allowedHosts: ['.trycloudflare.com', 'localhost'],
     proxy: {
       '/api': {
         target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+      // Forward /<bucket>/** to MinIO so root-relative media URLs work via
+      // Cloudflare tunnel (where localhost:9000 is unreachable from the browser).
+      '/photoconnect-media': {
+        target: 'http://localhost:9000',
         changeOrigin: true,
       },
     },

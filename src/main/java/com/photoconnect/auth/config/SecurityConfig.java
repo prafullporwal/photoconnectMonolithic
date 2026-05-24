@@ -2,6 +2,7 @@ package com.photoconnect.auth.config;
 
 import com.photoconnect.auth.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -34,6 +35,9 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @Value("${cors.allowed-origin-patterns:http://localhost:5173,http://localhost:8080}")
+    private String allowedOriginPatterns;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -65,6 +69,11 @@ public class SecurityConfig {
                                 "/api/v1/reviews/photographer/**",
                                 "/api/v1/reviews/summary/**").permitAll()
 
+                        // ── Admin endpoints ─────────────────────────────────
+                        // Role enforcement is via @PreAuthorize("hasRole('ADMIN')") on the
+                        // controller; all admin requests must still be authenticated.
+                        .requestMatchers("/api/v1/admin/**").authenticated()
+
                         // ── Observability + docs ─────────────────────────────
                         .requestMatchers(
                                 "/actuator/health/**",
@@ -91,7 +100,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:8080"));
+        cfg.setAllowedOriginPatterns(List.of(allowedOriginPatterns.split(",")));
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         cfg.setAllowedHeaders(List.of("*"));
         cfg.setExposedHeaders(List.of("X-Correlation-Id"));

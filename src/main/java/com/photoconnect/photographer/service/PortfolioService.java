@@ -163,6 +163,13 @@ public class PortfolioService {
 
     private String buildPublicUrl(String key) {
         String prefix = storage.publicUrlPrefix();
+        if (prefix == null || prefix.isBlank()) {
+            // No explicit public URL configured — use a root-relative path so the
+            // browser resolves it against whatever origin is serving the app.
+            // The Vite dev proxy (and any reverse-proxy in prod) must forward
+            // /<bucket>/** to MinIO.
+            return "/" + storage.bucket() + "/" + key;
+        }
         if (prefix.endsWith("/")) prefix = prefix.substring(0, prefix.length() - 1);
         return prefix + "/" + storage.bucket() + "/" + key;
     }

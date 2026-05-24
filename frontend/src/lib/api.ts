@@ -24,7 +24,7 @@ const USER_KEY    = 'pc.user';
 export interface StoredUser {
   userId: string;
   email: string;
-  role: 'PHOTOGRAPHER' | 'CUSTOMER';
+  role: 'PHOTOGRAPHER' | 'CUSTOMER' | 'ADMIN';
 }
 
 export const tokens = {

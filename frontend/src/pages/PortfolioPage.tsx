@@ -62,7 +62,9 @@ export function PortfolioPage() {
         body.append('file', staged.file);
         body.append('mediaType', staged.mediaType);
         body.append('category', staged.category.trim());
-        await api.post<PortfolioItem>('/photographers/me/portfolio', body);
+        await api.post<PortfolioItem>('/photographers/me/portfolio', body, {
+          timeout: 5 * 60 * 1000, // 5 min — large video files need time
+        });
         uploadedCount++;
       } catch (e) {
         // Remove already-uploaded items from the queue so the user can retry the rest
